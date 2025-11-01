@@ -5,22 +5,28 @@ def criar_receita():
     receita = {}
     
     for campo in campos:
+        # Loop until valid input is given
         valor = input(f"Digite o valor para '{campo}': ")
         
         # convert 'valor' field to float automatically
         if campo == 'valor':
             try:
-                valor = float(valor)
+                # Try to convert to float
+                    valor = float(valor)
+                    break  # ✅ valid, exit the loop
             except ValueError:
-                print("Valor inválido. Definindo como 0.0")
-                valor = 0.0
+                    print("Valor inválido! Informe um número, por exemplo: 5000.00 ou 1234.56.")
+                    continue  # ask again
+            else:
+                # For other fields, just accept the input
+                break
         
         receita[campo] = valor
     
     return receita
 
 
-# Exemplo de uso
+# print receita
 nova_receita = criar_receita()
 print("\nDicionário criado:")
 print(nova_receita)
