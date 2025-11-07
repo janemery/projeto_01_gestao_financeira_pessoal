@@ -10,41 +10,41 @@ mostra o menu
 '''
 
 def criar_receita():
-    campos = ['tipo', 'descricao', 'valor', 'data']
+    campos = ['tipo (receita ou despesa)', 'descricao', 'valor', 'data']
     receita = {}
 
     print("\n=== CADASTRO DE RECEITA ===")
 
     for campo in campos:
         while True:
-            valor = input(f"Digite o valor para '{campo}': ")
+            # valor = input(f"Digite o valor para '{campo}': ")
 
             # 🔸 Validate tipo (must be 'receita' or 'despesa')
             if campo == 'tipo':
                 valor = input(f"Preencha 'receita' ou 'despesa': ")
 
-                if valor.lower() in ['receita', 'despesa']:
-                    valor = valor.lower()  # normalize to lowercase
-                    break
-                else:
-                    print("❌ Tipo inválido! Escolha entre 'receita' ou 'despesa'.")
-                    continue
+            #     if valor.lower() in ['receita', 'despesa']:
+            #         valor = valor.lower()  # normalize to lowercase
+            #         break
+            #     else:
+            #         print("❌ Tipo inválido! Escolha entre 'receita' ou 'despesa'.")
+            #         continue
             
-            if campo == 'valor':
-                try:
-                    valor = float(valor)
-                    break
-                except ValueError:
-                    print("❌ Valor inválido! Informe um número, por exemplo: 5000.00 ou 1234.56.")
-                    continue
+            # if campo == 'valor':
+            #     try:
+            #         valor = float(valor)
+            #         break
+            #     except ValueError:
+            #         print("❌ Valor inválido! Informe um número, por exemplo: 5000.00 ou 1234.56.")
+            #         continue
 
-            elif campo == 'data':
-                try:
-                    datetime.strptime(valor, "%Y-%m-%d")
-                    break
-                except ValueError:
-                    print("❌ Data inválida! Use o formato YYYY-MM-DD (exemplo: 2024-01-15).")
-                    continue
+            # elif campo == 'data':
+            #     try:
+            #         datetime.strptime(valor, "%Y-%m-%d")
+            #         break
+            #     except ValueError:
+            #         print("❌ Data inválida! Use o formato YYYY-MM-DD (exemplo: 2024-01-15).")
+            #         continue
 
             else:
                 break
