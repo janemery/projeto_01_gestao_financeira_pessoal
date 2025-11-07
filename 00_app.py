@@ -48,14 +48,15 @@ def adiciona_registro():
                     print("❌ Valor inválido! Informe um número válido (ex: 1200.50).")
                     continue
 
-            # 🔹 Data (formato YYYY-MM-DD)
+            # 🔹 Data (formato DD/MM/YY)
             elif campo == 'data':
-                valor = input("Digite a data (YYYY-MM-DD): ")
+                valor = input("Digite a data (DD/MM/AA): ")
                 try:
-                    datetime.strptime(valor, "%Y-%m-%d")
+                    # tenta converter no formato dia/mês/ano com 2 dígitos
+                    datetime.strptime(valor, "%d/%m/%y")
                     break
                 except ValueError:
-                    print("❌ Data inválida! Use o formato YYYY-MM-DD (ex: 2025-11-07).")
+                    print("❌ Data inválida! Use o formato DD/MM/AA (ex: 01/02/25).")
                     continue
 
             # 🔹 Descrição
