@@ -10,7 +10,7 @@ mostra o menu
 '''
 
 def criar_receita():
-    campos = ['tipo (receita ou despesa)', 'descricao', 'valor', 'data']
+    campos = ['tipo', 'descricao', 'valor', 'data']
     receita = {}
 
     print("\n=== CADASTRO DE RECEITA ===")
