@@ -9,49 +9,67 @@ mostra o menu
 
 '''
 
-def criar_receita():
+def adiciona_registro():
+    """
+    Cadastra um novo registro financeiro (receita ou despesa).
+    Retorna um dicionário com os campos: tipo, descricao, valor e data.
+    """
     campos = ['tipo', 'descricao', 'valor', 'data']
-    receita = {}
+    registro = {}
 
-    print("\n=== CADASTRO DE RECEITA ===")
+    print("\n=== CADASTRO DE REGISTRO FINANCEIRO ===")
 
     for campo in campos:
         while True:
-            valor = input(f"Digite o valor para '{campo}': ")
-
-            # 🔸 Validate tipo (must be 'receita' or 'despesa')
+            # 🔹 Escolha do tipo: receita ou despesa
             if campo == 'tipo':
-                valor = input(f"Preencha 'receita' ou 'despesa': ")
+                print("\nSelecione o tipo:")
+                print("1. Receita")
+                print("2. Despesa")
+                escolha = input("Digite o número correspondente (1 ou 2): ")
 
-                if valor.lower() in ['receita', 'despesa']:
-                    valor = valor.lower()  # normalize to lowercase
+                if escolha == '1':
+                    valor = 'receita'
+                    break
+                elif escolha == '2':
+                    valor = 'despesa'
                     break
                 else:
-                    print("❌ Tipo inválido! Escolha entre 'receita' ou 'despesa'.")
+                    print("❌ Opção inválida! Digite apenas 1 ou 2.")
                     continue
-            
-            if campo == 'valor':
+
+            # 🔹 Valor numérico
+            elif campo == 'valor':
+                valor = input("Digite o valor (ex: 5000.00): ").replace(',', '.')
                 try:
                     valor = float(valor)
                     break
                 except ValueError:
-                    print("❌ Valor inválido! Informe um número, por exemplo: 5000.00 ou 1234.56.")
+                    print("❌ Valor inválido! Informe um número válido (ex: 1200.50).")
                     continue
 
+            # 🔹 Data (formato YYYY-MM-DD)
             elif campo == 'data':
+                valor = input("Digite a data (YYYY-MM-DD): ")
                 try:
                     datetime.strptime(valor, "%Y-%m-%d")
                     break
                 except ValueError:
-                    print("❌ Data inválida! Use o formato YYYY-MM-DD (exemplo: 2024-01-15).")
+                    print("❌ Data inválida! Use o formato YYYY-MM-DD (ex: 2025-11-07).")
                     continue
 
+            # 🔹 Descrição
             else:
+                valor = input("Digite a descrição: ").strip()
+                if valor == "":
+                    print("❌ A descrição não pode ficar vazia.")
+                    continue
                 break
 
-        receita[campo] = valor
+        registro[campo] = valor
 
-    return receita
+    print("\n✅ Registro adicionado com sucesso!")
+    return registro
 
 
 def menu():
@@ -71,23 +89,22 @@ def menu():
 
 
 def main():
-    receitas = []
+    registros = []
 
     while True:
         opcao = menu()
 
         if opcao == '1':
-            nova_receita = criar_receita()
-            receitas.append(nova_receita)
-            print("\n✅ Receita adicionada com sucesso!")
+            novo_registro = adiciona_registro()
+            registros.append(novo_registro)
 
         elif opcao == '2':
-            print("\n=== LISTA DE RECEITAS ===")
-            if receitas:
-                for i, r in enumerate(receitas, start=1):
+            print("\n=== LISTA DE REGISTROS ===")
+            if registros:
+                for i, r in enumerate(registros, start=1):
                     print(f"{i}. Tipo: {r['tipo']} | Descrição: {r['descricao']} | Valor: {r['valor']:.2f} | Data: {r['data']}")
             else:
-                print("Nenhuma receita cadastrada ainda.")
+                print("Nenhum registro cadastrado ainda.")
 
         elif opcao == '3':
             print("\n👋 Saindo... Até logo!")
