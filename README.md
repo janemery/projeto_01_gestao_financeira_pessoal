@@ -14,6 +14,11 @@
 2. Objetivo do Projeto
 
 Desenvolver um sistema simples de gestão financeira pessoal que permita registrar receitas e despesas, calcular saldo atual e gerar relatórios básicos usando apenas os conceitos fundamentais de Python.
+Objetivo do Projeto
+
+O projeto “Gestao Financeira Pessoal” tem como propósito criar uma ferramenta para controle financeiro pessoal, permitindo ao usuário registrar receitas e despesas, acompanhar saldos e analisar gastos por categoria.
+
+Ele resolve o problema de falta de organização financeira, oferecendo uma forma estruturada de registrar transações, gerar relatórios e visualizar o saldo atual.
 
 3. Diagrama de Contexto (Mermaid)
 
@@ -125,3 +130,4 @@ relatorio = {
 3. **Documentação** (`README.md`)
    - Como usar o sistema
    - Exemplos de uso
+
