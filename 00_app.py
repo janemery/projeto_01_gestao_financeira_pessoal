@@ -15,6 +15,10 @@ transacoes = []  # <--- inicializa a lista
 df = pd.DataFrame(transacoes)
 df["data"] = pd.to_datetime(df["data"])
 
+# ============================================================
+# FUNÇÃO: CADASTRAR REGISTRO FINANCEIRO
+# ============================================================
+
 def adiciona_registro():
     """
     Cadastra um novo registro financeiro (receita ou despesa).
@@ -78,9 +82,16 @@ def adiciona_registro():
     print("\n✅ Registro adicionado com sucesso!")
     return registro
 
+# ============================================================
+# FUNÇÃO: CALCULAR SALDOS
+# ============================================================
 
 def calcular_saldos_pandas(df, inicio=None, fim=None):
     """Calcula saldos totais e por categoria usando pandas."""
+    if df.empty:
+        print("⚠️ Nenhum registro disponível para cálculo.")
+        return 0, 0, 0, {}
+    
     if "data" not in df.columns:
         raise KeyError("A coluna 'data' não existe no DataFrame.")
     
@@ -109,29 +120,34 @@ def calcular_saldos_pandas(df, inicio=None, fim=None):
     saldo_atual = total_receitas - total_despesas
     return saldo_atual, total_receitas, total_despesas, gastos_por_categoria
 
-saldo2, receitas2, despesas2, categorias2 = calcular_saldos_pandas(df)
-print("Saldo atual (pandas):", saldo2)
-print("Receitas:", receitas2)
-print("Despesas:", despesas2)
-print("Gastos por categoria:", categorias2)
+# saldo2, receitas2, despesas2, categorias2 = calcular_saldos_pandas(df)
+# print("Saldo atual (pandas):", saldo2)
+# print("Receitas:", receitas2)
+# print("Despesas:", despesas2)
+# print("Gastos por categoria:", categorias2)
 
-
+# ============================================================
+# FUNÇÃO: MENU
+# ============================================================
 def menu():
     print("\n===========================")
     print("   💰 GERENCIADOR FINANCEIRO")
     print("===========================")
     print("1. Adicionar registro")
     print("2. Listar registros")
-    print("3. Sair")
+    print("3. Mostrar saldo")
+    print("4. Sair")
 
     while True:
-        opcao = input("Escolha uma opção (1-3): ")
-        if opcao in ['1', '2', '3']:
+        opcao = input("Escolha uma opção (1-4): ")
+        if opcao in ['1', '2', '3', '4']:
             return opcao
         else:
-            print("❌ Opção inválida! Escolha um número entre 1 e 3.")
+            print("❌ Opção inválida! Escolha um número entre 1 e 4.")
 
-
+# ============================================================
+# FUNÇÃO PRINCIPAL
+# ============================================================
 def main():
     registros = []
 
