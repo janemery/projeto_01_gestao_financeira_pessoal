@@ -1,10 +1,21 @@
 # Projeto 01: Sistema de Gestão Financeira Pessoal
 
-## 📋 Objetivo
+1. Cabeçalho e Informações Básicas
+
+# Nome do Projeto
+**Disciplina:** Programação para Ciência de Dados
+**Curso:** MBA Ciência de Dados - UNIFOR
+**Instrutor:** Cássio Pinheiro
+**Integrantes:**
+- Jane Mery Ferreira de Miranda (2528376)
+**Repositório GitHub:** https://github.com/janemery/projeto_01_gestao_financeira_pessoal
+**Data de Entrega:** 14/11/2025
+
+2. Objetivo do Projeto
 
 Desenvolver um sistema simples de gestão financeira pessoal que permita registrar receitas e despesas, calcular saldo atual e gerar relatórios básicos usando apenas os conceitos fundamentais de Python.
 
-## 🗺️ Diagrama de Contexto
+3. Diagrama de Contexto (Mermaid)
 
 ```mermaid
 graph TD
@@ -21,7 +32,7 @@ graph TD
     style E fill:#f5e1ff
 ```
 
-## 🔧 Funcionalidades Básicas
+4. Funcionalidades Implementadas
 
 1. **Cadastro de Transações**
    - Registrar receitas (descrição, valor, data)
@@ -44,7 +55,7 @@ graph TD
    - Carregar transações do arquivo
    - Manter histórico de transações
 
-## 📊 Estrutura de Dados
+5. Estrutura de Dados
 
 ### Entrada
 
@@ -89,7 +100,7 @@ relatorio = {
 }
 ```
 
-## 💻 Requisitos Técnicos
+6. Requisitos Técnicos
 
 - Python 3.8+
 - Conhecimentos em:
