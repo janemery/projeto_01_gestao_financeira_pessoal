@@ -11,6 +11,9 @@
 **Repositório GitHub:** https://github.com/janemery/projeto_01_gestao_financeira_pessoal
 **Data de Entrega:** 14/11/2025
 
+Público-alvo ou contexto de aplicação
+file:///Users/cassiopinheiro/Documents/UNIFOR/Programacao%20C…20Dados/projetos/modulos_1/ESPECIFICACOES_PROJETO_FINAL.html Página 2 de 9 
+ESPECIFICACOES_PROJETO_FINAL.md 07/11/2025, 20:02 
 2. Objetivo do Projeto
 
 Desenvolver um sistema simples de gestão financeira pessoal que permita registrar receitas e despesas, calcular saldo atual e gerar relatórios básicos usando apenas os conceitos fundamentais de Python.
@@ -131,3 +134,12 @@ relatorio = {
    - Como usar o sistema
    - Exemplos de uso
 
+
+
+
+3. Diagrama de Contexto (Mermaid) 
+Diagrama C4 de contexto mostrando o sistema e seus relacionamentos Pode usar diagramas Container ou Component se aplicável 
+4. Funcionalidades Implementadas 
+Lista detalhada de todas as funcionalidades 
+Descrição do que cada funcionalidade faz 
+Indicação de quais módulos foram utilizados em cada funcionalidade
