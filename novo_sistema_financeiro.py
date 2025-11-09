@@ -1,33 +1,48 @@
 import pandas as pd
 import numpy as np
+import os
 
 # Configurações opcionais
 pd.set_option('display.max_rows', 10)
 pd.set_option('display.float_format', lambda x: f'{x:.2f}')
 
-# Leitura do arquivo CSV
-df = pd.read_csv('dados_financeiros.csv')
-
-# Visualizar as 5 primeiras linhas
-print(df.head())
-
-def calcular_saldo(arquivo_csv):
-    """
-    Lê um arquivo CSV contendo registros financeiros e calcula o saldo atual.
-    O CSV deve ter as colunas: tipo (receita/despesa) e valor.
-    """
-    # Lê o CSV
-    try:
-        df = pd.read_csv(arquivo_csv)
-    except FileNotFoundError:
+def validar_csv(arquivo_csv):
+    
+    # Verifica se o arquivo existe
+    if not os.path.isfile(arquivo_csv):
         print(f"❌ Arquivo '{arquivo_csv}' não encontrado.")
         return None
 
-    # Verifica se as colunas necessárias existem
-    if 'receita_despesa' not in df.columns or 'valor' not in df.columns:
-        print("❌ O CSV precisa conter as colunas 'receita_despesa' e 'valor'.")
+    # Tenta ler o CSV
+    try:
+        df = pd.read_csv(arquivo_csv)
+    except Exception as e:
+        print(f"❌ Erro ao ler o arquivo: {e}")
         return None
 
+    # Verifica se todas as colunas esperadas estão presentes
+    colunas_esperadas = ['receita_despesa', 'valor', 'descricao', 'data_transacao', 'categoria']
+    colunas_faltando = [col for col in colunas_esperadas if col not in df.columns]
+    if colunas_faltando:
+        print(f"❌ Colunas faltando no CSV: {colunas_faltando}")
+        return None
+
+     # Converte a coluna 'valor' para float (caso venha como string) e valida valores positivos
+    try:
+        df['valor'] = df['valor'].astype(str).str.replace(',', '.').astype(float)
+    except Exception as e:
+        print(f"❌ Erro ao converter valores da coluna 'valor' para float: {e}")
+        return None
+
+    if (df['valor'] <= 0).any():
+        print("❌ A coluna 'valor' contém valores negativos ou zero.")
+        return None
+
+    print("✅ CSV validado com sucesso!")
+    return df
+
+def calcular_saldo(df):
+    
     # Calcula total de receitas
     total_receitas = df[df['receita_despesa'] == 1]['valor'].sum()
     print(total_receitas)
@@ -41,33 +56,7 @@ def calcular_saldo(arquivo_csv):
 
     return saldo_atual
 
-arquivo = 'dados_financeiros.csv'
-saldo = calcular_saldo(arquivo)
-if saldo is not None:
-    print(f"Saldo atual: R$ {saldo:.2f}")
-
-def total_por_categoria(arquivo_csv):
-    """
-    Calcula o total de valores por categoria para despesas.
-    
-    Parâmetros:
-    - arquivo_csv: caminho para o CSV com as colunas ['receita_despesa', 'valor', 'categoria']
-    
-    Retorna:
-    - dicionário com categoria como chave e total como valor
-    """
-    # Lê o CSV
-    try:
-        df = pd.read_csv(arquivo_csv)
-    except FileNotFoundError:
-        print(f"❌ Arquivo '{arquivo_csv}' não encontrado.")
-        return None
-
-    # Verifica se as colunas necessárias existem
-    for col in ['receita_despesa', 'valor', 'categoria']:
-        if col not in df.columns:
-            print(f"❌ O CSV precisa conter a coluna '{col}'.")
-            return None
+def total_por_categoria(df):
 
     # Filtra apenas despesas (receita_despesa == 0)
     df_despesas = df[df['receita_despesa'] == 0]
@@ -77,9 +66,29 @@ def total_por_categoria(arquivo_csv):
 
     return totais
 
-arquivo = 'dados_financeiros.csv'
-totais_categorias = total_por_categoria(arquivo)
+def main():
 
-print("Total por categoria:")
-for cat, val in totais_categorias.items():
-    print(f"{cat}: R$ {val:.2f}")
+    # Leitura do arquivo CSV
+    df = pd.read_csv('dados_financeiros.csv')
+
+    # Visualizar as 5 primeiras linhas
+    print(df.head())
+    
+    # Lê o CSV
+    # validar_csv(arquivo_csv)
+    
+    saldo = calcular_saldo(df)
+
+    if saldo is not None:
+        print(f"Saldo atual: R$ {saldo:.2f}")
+
+    totais_categorias = total_por_categoria(df)
+
+    print("Total por categoria:")
+    # print(totais_categorias)
+    for cat, val in totais_categorias.items():
+        print(f"{cat}: R$ {val:.2f}")
+
+
+if __name__ == "__main__":
+    main()
