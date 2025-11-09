@@ -13,7 +13,8 @@ transacoes = []  # <--- inicializa a lista
 
 # Cria o DataFrame a partir da lista de registros
 df = pd.DataFrame(transacoes)
-df["data"] = pd.to_datetime(df["data"])
+print(df.columns)
+#df["data"] = pd.to_datetime(df["data"])
 
 # ============================================================
 # FUNÇÃO: CADASTRAR REGISTRO FINANCEIRO
