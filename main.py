@@ -1,4 +1,4 @@
-from novo_sistema_financeiro import validar_csv
+from novo_sistema_financeiro import calcular_saldo, validar_csv
 from novo_sistema_financeiro import (
     total_por_categoria,
     total_categorias_por_periodo
@@ -35,19 +35,32 @@ def main():
     except Exception as e:
         print(e)
         return
+    
+    # Exibe um resumo inicial
+    print("\n✅ Arquivo carregado com sucesso!")
+    print(df.head(), "\n")
 
+    saldo = calcular_saldo(df)
+    if saldo is not None:
+        print(f"💰 Saldo atual: R$ {saldo:,.2f}")
+
+    # ======================================================
+    # MENU PRINCIPAL
+    # ======================================================
     while True:
         opcao = menu()
 
         if opcao == '1':
             # Exibir extrato
+            print("\n🏷️ Extrato Geral:")
             exibir_extrato(df)
 
         elif opcao == '2':
-            # Resumo geral
-            # resumo = calcular_resumo(df)
+            # Mostrar total por categoria
             totais_categoria = total_por_categoria(df)
-            print(totais_categoria)
+            print("\n🏷️ Total por categoria:")
+            for cat, val in totais_categoria.items():
+                print(f"   - {cat:<15}: R$ {val:,.2f}")
 
         elif opcao == '3':
             # Totais por período

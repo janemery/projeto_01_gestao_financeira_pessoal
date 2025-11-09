@@ -67,22 +67,34 @@ def total_por_categoria(df):
     return totais
 
 def total_categorias_por_periodo(df, data_inicio, data_fim):
-    # Converte a coluna de datas para datetime
-    df['data_transacao'] = pd.to_datetime(df['data_transacao'], format='%d/%m/%Y', errors='coerce')
 
-    # Converte datas de input para datetime
-    inicio = pd.to_datetime(data_inicio, format='%d/%m/%Y')
-    fim = pd.to_datetime(data_fim, format='%d/%m/%Y')
+    def parse_data(data_str):
+        """Tenta converter datas nos formatos dd/mm/aaaa e dd/mm/aa."""
+        for fmt in ("%d/%m/%Y", "%d/%m/%y"):
+            try:
+                return pd.to_datetime(data_str, format=fmt)
+            except ValueError:
+                continue
+        raise ValueError(f"Formato de data inválido: {data_str}")
 
-    # Filtra apenas despesas dentro do período
-    filtro = (df['receita_despesa'] == 0) & (df['data_transacao'] >= inicio) & (df['data_transacao'] <= fim)
+    # 🗓️ Converter datas de entrada
+    inicio = parse_data(data_inicio)
+    fim = parse_data(data_fim)
+
+    # 🧹 Converter a coluna 'data_transacao' se ainda não estiver no formato datetime
+    df['data_transacao'] = pd.to_datetime(df['data_transacao'], format="%d/%m/%Y", errors='coerce')
+
+    # 🔎 Filtrar pelo período
+    filtro = (df['data_transacao'] >= inicio) & (df['data_transacao'] <= fim)
     df_filtrado = df[filtro]
 
-    # Agrupa por categoria e soma os valores
-    totais = df_filtrado.groupby('categoria')['valor'].sum()
+    if df_filtrado.empty:
+        print("⚠️ Nenhuma transação encontrada no período informado.")
+        return {}
 
-    # Converte para dicionário e retorna
-    return totais.to_dict()
+    # Calcular totais por categoria
+    totais = df_filtrado.groupby('categoria')['valor'].sum().to_dict()
+    return totais
 
 def exibir_extrato(df):
     
@@ -138,9 +150,6 @@ def main():
     # Exemplo de uso:
     resultado = total_categorias_por_periodo(df, '01/04/2025', '28/04/2025')
     print(f"total_categorias_por_periodo {resultado}")
-
-    exibir_extrato(df)
-
 
 if __name__ == "__main__":
     main()
