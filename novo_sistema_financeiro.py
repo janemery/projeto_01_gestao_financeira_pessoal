@@ -27,14 +27,7 @@ def validar_csv(arquivo_csv):
         print(f"❌ Colunas faltando no CSV: {colunas_faltando}")
         return None
 
-     # Converte a coluna 'valor' para float (caso venha como string) e valida valores positivos
-    try:
-        df['valor'] = df['valor'].astype(str).str.replace(',', '.').astype(float)
-    except Exception as e:
-        print(f"❌ Erro ao converter valores da coluna 'valor' para float: {e}")
-        return None
-
-    if (df['valor'] <= 0).any():
+    if (df['valor'] < 0).any():
         print("❌ A coluna 'valor' contém valores negativos ou zero.")
         return None
 
@@ -68,14 +61,15 @@ def total_por_categoria(df):
 
 def main():
 
+    # Lê o CSV
+    validar_csv('dados_financeiros.csv')
+
     # Leitura do arquivo CSV
     df = pd.read_csv('dados_financeiros.csv')
 
     # Visualizar as 5 primeiras linhas
     print(df.head())
     
-    # Lê o CSV
-    # validar_csv(arquivo_csv)
     
     saldo = calcular_saldo(df)
 
