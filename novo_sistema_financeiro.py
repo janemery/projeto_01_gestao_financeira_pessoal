@@ -34,18 +34,25 @@ def validar_csv(arquivo_csv):
     print("✅ CSV validado com sucesso!")
     return df
 
-def calcular_saldo(df):
-    
-    # Calcula total de receitas
-    total_receitas = df[df['receita_despesa'] == 1]['valor'].sum()
-    print(total_receitas)
-
+def calcular_despesas(df):
     # Calcula total de despesas
     total_despesas = df[df['receita_despesa'] == 0]['valor'].sum()
     print(total_despesas)
+    return total_despesas
+
+def calcular_receitas(df):
+    # Calcula total de receitas
+    total_receitas = df[df['receita_despesa'] == 1]['valor'].sum()
+    print(total_receitas)
+    return total_receitas
+
+def calcular_saldo(df):
+    receitas = calcular_receitas(df)
+    
+    despesas = calcular_despesas(df)
 
     # Saldo atual
-    saldo_atual = total_receitas - total_despesas
+    saldo_atual = receitas - despesas
 
     return saldo_atual
 
@@ -79,11 +86,6 @@ def total_categorias_por_periodo(df, data_inicio, data_fim):
 
 def exibir_extrato(df):
     
-    # # Verifica se o DataFrame está vazio
-    # if df.empty:
-    #     print("⚠️ Nenhuma transação encontrada.")
-    #     return
-
     # Converte a coluna de data, se necessário
     if df['data_transacao'].dtype == 'object':
         df['data_transacao'] = pd.to_datetime(df['data_transacao'], format='%d/%m/%Y', errors='coerce')
