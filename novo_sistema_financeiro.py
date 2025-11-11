@@ -31,19 +31,19 @@ def validar_csv(arquivo_csv):
         print("❌ A coluna 'valor' contém valores negativos ou zero.")
         return None
 
-    print("✅ CSV validado com sucesso!")
+    # print("✅ CSV validado com sucesso!")
     return df
 
 def calcular_despesas(df):
     # Calcula total de despesas
     total_despesas = df[df['receita_despesa'] == 0]['valor'].sum()
-    print(total_despesas)
+    # print(total_despesas)
     return total_despesas
 
 def calcular_receitas(df):
     # Calcula total de receitas
     total_receitas = df[df['receita_despesa'] == 1]['valor'].sum()
-    print(total_receitas)
+    # print(total_receitas)
     return total_receitas
 
 def calcular_saldo(df):
@@ -118,38 +118,38 @@ def exibir_extrato(df):
     total_despesas = df[df['receita_despesa'] == 0]['valor'].sum()
     saldo = total_receitas - total_despesas
 
-    print("\n--- Totais ---")
+    print("\n=== 💰 TOTAIS ===")
     print(f"📈 Total de Receitas: R$ {total_receitas:,.2f}")
     print(f"📉 Total de Despesas: R$ {total_despesas:,.2f}")
     print(f"💵 Saldo Atual: R$ {saldo:,.2f}")
 
-def main():
+# def main():
 
-    # Lê o CSV
-    validar_csv('dados_financeiros.csv')
+#     # Lê o CSV
+#     validar_csv('dados_financeiros.csv')
 
-    # Leitura do arquivo CSV
-    df = pd.read_csv('dados_financeiros.csv')
+#     # Leitura do arquivo CSV
+#     df = pd.read_csv('dados_financeiros.csv')
 
-    # Visualizar as 5 primeiras linhas
-    print(df.head())
+#     # Visualizar as 5 primeiras linhas
+#     print(df.head())
     
-    saldo = calcular_saldo(df)
+#     saldo = calcular_saldo(df)
 
-    if saldo is not None:
-        print(f"Saldo atual: R$ {saldo:.2f}")
+#     if saldo is not None:
+#         print(f"Saldo atual: R$ {saldo:.2f}")
 
-    totais_categorias = total_por_categoria(df)
+#     totais_categorias = total_por_categoria(df)
 
-    print("Total por categoria:")
+#     print(f"Total por categoria: ")
 
-    print(totais_categorias)
-    for cat, val in totais_categorias.items():
-        print(f"{cat}: R$ {val:.2f}")
+#     print(totais_categorias)
+#     for cat, val in totais_categorias.items():
+#         print(f"{cat}: R$ {val:.2f}")
     
-    # Exemplo de uso:
-    resultado = total_categorias_por_periodo(df, '01/04/2025', '28/04/2025')
-    print(f"total_categorias_por_periodo {resultado}")
+#     # Exemplo de uso:
+#     resultado = total_categorias_por_periodo(df, '01/04/2025', '28/04/2025')
+#     print(f"total_categorias_por_periodo {resultado}")
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

@@ -1,4 +1,4 @@
-from novo_sistema_financeiro import calcular_saldo, validar_csv
+from novo_sistema_financeiro import calcular_despesas, calcular_receitas, calcular_saldo, validar_csv
 from novo_sistema_financeiro import (
     total_por_categoria,
     total_categorias_por_periodo
@@ -37,12 +37,12 @@ def main():
         return
     
     # Exibe um resumo inicial
-    print("\n✅ Arquivo carregado com sucesso!")
-    print(df.head(), "\n")
+    # print("\n✅ Arquivo carregado com sucesso!")
+    # print(df.head(), "\n")
 
     saldo = calcular_saldo(df)
-    if saldo is not None:
-        print(f"💰 Saldo atual: R$ {saldo:,.2f}")
+    # if saldo is not None:
+        # print(f"💰 Saldo atual: R$ {saldo:,.2f}")
 
     # ======================================================
     # MENU PRINCIPAL
@@ -52,15 +52,21 @@ def main():
 
         if opcao == '1':
             # Exibir extrato
-            print("\n🏷️ Extrato Geral:")
+            print("\n🏷️  Você escolheu exibir Extrato:")
             exibir_extrato(df)
 
         elif opcao == '2':
             # Mostrar total por categoria
             totais_categoria = total_por_categoria(df)
+            print("\n🏷️  Você escolheu Resumo financeiro:")
+            total_receitas = calcular_receitas(df)
+            print(f"\n🏷️ Total de receitas: {total_receitas:,.2f}")
             print("\n🏷️ Total por categoria:")
             for cat, val in totais_categoria.items():
                 print(f"   - {cat:<15}: R$ {val:,.2f}")
+            total_despesas = calcular_despesas(df)
+            print("-----------------------------")
+            print(f"   Total de despesas: R$ {total_despesas:,.2f}")
 
         elif opcao == '3':
             # Totais por período
@@ -69,7 +75,8 @@ def main():
 
             totais_periodo = total_categorias_por_periodo(df, data_inicio, data_fim)
 
-            print("\n🏷️  Totais por Categoria no Período:")
+            print("\n🏷️  Você escolheu Totais por Categoria no Período:")
+            print(f"\n📅 Período: {data_inicio} - {data_fim}\n")
             for categoria, valor in totais_periodo.items():
                 print(f"   - {categoria:<15}: R$ {valor:,.2f}")
 
