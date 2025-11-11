@@ -1,29 +1,34 @@
-# Projeto 01: Sistema de Gestão Financeira Pessoal
+# 💰 Projeto 01: Sistema de Gestão Financeira Pessoal
 
-1. Cabeçalho e Informações Básicas
+## 1️⃣ Cabeçalho e Informações Básicas
 
-# Nome do Projeto
-**Disciplina:** Programação para Ciência de Dados
-**Curso:** MBA Ciência de Dados - UNIFOR
-**Instrutor:** Cássio Pinheiro
-**Integrantes:**
-- Jane Mery Ferreira de Miranda (2528376)
-**Repositório GitHub:** https://github.com/janemery/projeto_01_gestao_financeira_pessoal
-**Data de Entrega:** 14/11/2025
+**Nome do Projeto:** Sistema de Gestão Financeira Pessoal  
+**Disciplina:** Programação para Ciência de Dados  
+**Curso:** MBA Ciência de Dados - UNIFOR  
+**Instrutor:** Cássio Pinheiro  
+**Integrantes:** Jane Mery Ferreira de Miranda (2528376)  
+**Repositório GitHub:** [📂 projeto_01_gestao_financeira_pessoal](https://github.com/janemery/projeto_01_gestao_financeira_pessoal)  
+**Data de Entrega:** 14/11/2025  
 
-Público-alvo ou contexto de aplicação
-file:///Users/cassiopinheiro/Documents/UNIFOR/Programacao%20C…20Dados/projetos/modulos_1/ESPECIFICACOES_PROJETO_FINAL.html Página 2 de 9 
-ESPECIFICACOES_PROJETO_FINAL.md 07/11/2025, 20:02 
-2. Objetivo do Projeto
+**Público-alvo / Contexto de Aplicação:**  
+Ferramenta de gestão financeira pessoal para registrar receitas e despesas, calcular saldo e gerar relatórios básicos.
 
-Desenvolver um sistema simples de gestão financeira pessoal que permita registrar receitas e despesas, calcular saldo atual e gerar relatórios básicos usando apenas os conceitos fundamentais de Python.
-Objetivo do Projeto
+---
 
-O projeto “Gestao Financeira Pessoal” tem como propósito criar uma ferramenta para controle financeiro pessoal, permitindo ao usuário registrar receitas e despesas, acompanhar saldos e analisar gastos por categoria.
+## 2️⃣ Objetivo do Projeto
 
-Ele resolve o problema de falta de organização financeira, oferecendo uma forma estruturada de registrar transações, gerar relatórios e visualizar o saldo atual.
+O projeto **Gestão Financeira Pessoal** tem como objetivo criar uma ferramenta para controle financeiro pessoal, permitindo ao usuário:
 
-3. Diagrama de Contexto (Mermaid)
+- 📝 Registrar receitas e despesas  
+- 💵 Acompanhar saldos  
+- 📊 Analisar gastos por categoria  
+- 🧾 Gerar relatórios simples  
+
+O sistema resolve o problema de **falta de organização financeira**, oferecendo uma forma estruturada de registrar transações, gerar relatórios e visualizar o saldo atual.
+
+---
+
+## 3️⃣ Diagrama de Contexto (Mermaid)
 
 ```mermaid
 graph TD
@@ -33,113 +38,87 @@ graph TD
     C --> E[Arquivo TXT<br/>Persistência]
     D --> F[Usuário]
     
-    style A fill:#e1f5ff
-    style B fill:#ffe1f5
-    style C fill:#e7ffe1
-    style D fill:#fff5e1
-    style E fill:#f5e1ff
+    style A fill:#e1f5ff,stroke:#333,stroke-width:1px
+    style B fill:#ffe1f5,stroke:#333,stroke-width:1px
+    style C fill:#e7ffe1,stroke:#333,stroke-width:1px
+    style D fill:#fff5e1,stroke:#333,stroke-width:1px
+    style E fill:#f5e1ff,stroke:#333,stroke-width:1px
 ```
+## 4️⃣ Funcionalidades Implementadas
 
-4. Funcionalidades Implementadas
+- Cadastro de transações: receitas e despesas, validação de valores
 
-1. **Cadastro de Transações**
-   - Registrar receitas (descrição, valor, data)
-   - Registrar despesas (descrição, valor, data, categoria)
-   - Validar valores positivos
+- Cálculos financeiros: saldo atual, totais por período, gastos por categoria
 
-2. **Cálculos Financeiros**
-   - Calcular saldo atual (receitas - despesas)
-   - Calcular total de receitas por período
-   - Calcular total de despesas por período
-   - Calcular gastos por categoria
+- Relatórios: extrato, resumo financeiro, filtragem por período ou categoria
 
-3. **Relatórios**
-   - Exibir extrato de transações
-   - Mostrar resumo financeiro (saldo, totais, categorias)
-   - Filtrar transações por período ou categoria
+- Persistência: salvar e carregar transações em arquivo TXT
 
-4. **Persistência de Dados**
-   - Salvar transações em arquivo TXT
-   - Carregar transações do arquivo
-   - Manter histórico de transações
-
-5. Estrutura de Dados
-
-### Entrada
-
+## 5️⃣ Estrutura de Dados
 ```python
 # Receita
-receita = {
-    'tipo': 'receita',
-    'descricao': 'Salário',
-    'valor': 5000.00,
-    'data': '2024-01-15'
-}
+receita = {'tipo': 'receita', 'descricao': 'Salário', 'valor': 5000.00, 'data': '2024-01-15'}
 
 # Despesa
-despesa = {
-    'tipo': 'despesa',
-    'descricao': 'Supermercado',
-    'valor': 450.00,
-    'data': '2024-01-20',
-    'categoria': 'Alimentação'
-}
+despesa = {'tipo': 'despesa', 'descricao': 'Supermercado', 'valor': 450.00, 'data': '2024-01-20', 'categoria': 'Alimentação'}
 ```
 
-### Saída
+## 6️⃣ Requisitos Técnicos
 
-```python
-# Lista de transações
-transacoes = [
-    {'tipo': 'receita', 'descricao': 'Salário', 'valor': 5000.00, 'data': '2024-01-15'},
-    {'tipo': 'despesa', 'descricao': 'Supermercado', 'valor': 450.00, 'data': '2024-01-20', 'categoria': 'Alimentação'},
-    # ... mais transações
-]
-
-# Relatório
-relatorio = {
-    'saldo_atual': 4550.00,
-    'total_receitas': 5000.00,
-    'total_despesas': 450.00,
-    'gastos_por_categoria': {
-        'Alimentação': 450.00,
-        'Transporte': 200.00
-    }
-}
-```
-
-6. Requisitos Técnicos
-
-- Python 3.8+
+- Python 3.8+  
 - Conhecimentos em:
-  - Tipos de dados (int, float, str, dict, list)
-  - Estruturas de controle (if/else, for, while)
-  - Funções e documentação
-  - Compreensões de lista e dicionário
-  - Manipulação de arquivos (leitura/escrita)
-  - Tratamento de erros básico
+  - Tipos de dados: `int`, `float`, `str`, `dict`, `list`  
+  - Estruturas de controle: `if/else`, `for`, `while`  
+  - Funções e documentação  
+  - Compreensões de lista e dicionário  
+  - Manipulação de arquivos (leitura/escrita)  
+  - Tratamento de erros básico  
 
-## 📦 Entregáveis
+---
 
-1. **Código Python** (`sistema_financeiro.py`)
-   - Módulo principal com todas as funcionalidades
-   - Funções bem documentadas
-   - Tratamento de erros básico
+## 7️⃣ 📦 Entregáveis
 
-2. **Arquivo de Dados** (`transacoes.txt`)
-   - Formato estruturado para persistência
-   - Exemplo com algumas transações
+1. **Código Python** (`sistema_financeiro.py`)  
+2. **Arquivo de Dados** (`transacoes.txt`)  
+3. **Documentação** (`README.md`)  
 
-3. **Documentação** (`README.md`)
-   - Como usar o sistema
-   - Exemplos de uso
+## 8️⃣ 🛠️ Como Usar o Sistema
 
+Clone o repositório:
+```
+git clone https://github.com/janemery/projeto_01_gestao_financeira_pessoal.git
+cd projeto_01_gestao_financeira_pessoal
+```
 
+Execute o sistema no terminal:
+```
+python main.py
+```
 
+Siga as instruções do menu para:
 
-3. Diagrama de Contexto (Mermaid) 
-Diagrama C4 de contexto mostrando o sistema e seus relacionamentos Pode usar diagramas Container ou Component se aplicável 
-4. Funcionalidades Implementadas 
-Lista detalhada de todas as funcionalidades 
-Descrição do que cada funcionalidade faz 
-Indicação de quais módulos foram utilizados em cada funcionalidade
+   - Registrar receitas e despesas
+
+   - Consultar saldo e extratos
+
+   - Filtrar relatórios por período ou categoria
+
+## 9️⃣ 📌 Exemplos de Uso
+Registrar Receita
+Data: 15/01/2024
+Tipo: Receita
+Descrição: Salário
+Valor: 5000
+
+Registrar Despesa
+Data: 20/01/2024
+Tipo: Despesa
+Descrição: Supermercado
+Valor: 450
+Categoria: Alimentação
+
+Consultar Saldo e Extrato
+Saldo Atual: R$ 4550,00
+Extrato:
+   - 15/01/2024: Salário (Receita) R$ 5000,00
+   - 20/01/2024: Supermercado (Despesa) R$ 450,00
