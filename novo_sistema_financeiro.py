@@ -132,34 +132,3 @@ def exibir_extrato(df):
     print(f"📈 Total de Receitas: R$ {total_receitas:,.2f}")
     print(f"📉 Total de Despesas: R$ {total_despesas:,.2f}")
     print(f"💵 Saldo Atual: R$ {saldo:,.2f}")
-
-# def main():
-
-#     # Lê o CSV
-#     validar_csv('dados_financeiros.csv')
-
-#     # Leitura do arquivo CSV
-#     df = pd.read_csv('dados_financeiros.csv')
-
-#     # Visualizar as 5 primeiras linhas
-#     print(df.head())
-    
-#     saldo = calcular_saldo(df)
-
-#     if saldo is not None:
-#         print(f"Saldo atual: R$ {saldo:.2f}")
-
-#     totais_categorias = total_por_categoria(df)
-
-#     print(f"Total por categoria: ")
-
-#     print(totais_categorias)
-#     for cat, val in totais_categorias.items():
-#         print(f"{cat}: R$ {val:.2f}")
-    
-#     # Exemplo de uso:
-#     resultado = total_categorias_por_periodo(df, '01/04/2025', '28/04/2025')
-#     print(f"total_categorias_por_periodo {resultado}")
-
-# if __name__ == "__main__":
-#     main()
