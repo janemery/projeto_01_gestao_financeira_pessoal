@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import matplotlib.pyplot as plt
 
 # Configurações opcionais
 pd.set_option('display.max_rows', 10)
@@ -35,15 +36,21 @@ def validar_csv(arquivo_csv):
     return df
 
 def calcular_despesas(df):
-    # Calcula total de despesas
-    total_despesas = df[df['receita_despesa'] == 0]['valor'].sum()
-    # print(total_despesas)
+    # Converte colunas para arrays NumPy
+    valores = df['valor'].to_numpy()
+    tipos = df['receita_despesa'].to_numpy()
+
+    # Seleciona apenas despesas (receita_despesa == 0) e soma
+    total_despesas = valores[tipos == 0].sum()
     return total_despesas
 
 def calcular_receitas(df):
-    # Calcula total de receitas
-    total_receitas = df[df['receita_despesa'] == 1]['valor'].sum()
-    # print(total_receitas)
+    # Converte colunas para arrays NumPy
+    valores = df['valor'].to_numpy()
+    tipos = df['receita_despesa'].to_numpy()
+
+    # Seleciona apenas receitas (receita_despesa == 1) e soma
+    total_receitas = valores[tipos == 1].sum()
     return total_receitas
 
 def calcular_saldo(df):
@@ -132,3 +139,21 @@ def exibir_extrato(df):
     print(f"📈 Total de Receitas: R$ {total_receitas:,.2f}")
     print(f"📉 Total de Despesas: R$ {total_despesas:,.2f}")
     print(f"💵 Saldo Atual: R$ {saldo:,.2f}")
+
+def gerar_relatorio_categorias(df, nome_arquivo="relatorio_receitas_despesas.png"):
+    if not os.path.exists("relatorios"):
+        os.makedirs("relatorios")
+    
+    plt.figure(figsize=(8,5))
+    df.plot(kind='bar', color=['red', 'green'])
+    plt.title('Receitas e Despesas por Categoria')
+    plt.xlabel('Categoria')
+    plt.ylabel('Valor (R$)')
+    plt.legend(['Despesas', 'Receitas'])
+    plt.tight_layout()
+    
+    caminho = os.path.join("relatorios", nome_arquivo)
+    plt.savefig(caminho)
+    plt.show()
+    
+    print(f"✅ Relatório salvo em '{caminho}'")
