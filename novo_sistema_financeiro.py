@@ -54,12 +54,12 @@ def calcular_receitas(df):
     return total_receitas
 
 def calcular_saldo(df):
-    receitas = calcular_receitas(df)
-    
-    despesas = calcular_despesas(df)
+    # Converte colunas para arrays NumPy
+    valores = df['valor'].to_numpy()
+    tipos = df['receita_despesa'].to_numpy()  # 1 = receita, 0 = despesa
 
-    # Saldo atual
-    saldo_atual = receitas - despesas
+    # Calcula saldo usando indexação booleana
+    saldo_atual = valores[tipos == 1].sum() - valores[tipos == 0].sum()
 
     return saldo_atual
 
