@@ -75,11 +75,13 @@ def main():
 
             totais_periodo = total_categorias_por_periodo(df, data_inicio, data_fim)
 
-            print("\n🏷️  Você escolheu Totais por Categoria no Período:")
-            print(f"\n📅 Período: {data_inicio} - {data_fim}\n")
-            for categoria, valor in totais_periodo.items():
-                print(f"   - {categoria:<15}: R$ {valor:,.2f}")
-
+            if totais_periodo is None or not totais_periodo:
+                print("❌ Não foi possível calcular os totais — verifique as datas ou se há dados no período.")
+            else:
+                print("\n🏷️  Você escolheu Totais por Categoria no Período:")
+                print(f"📅 Período: {data_inicio} - {data_fim}\n")
+                for categoria, valor in totais_periodo.items():
+                    print(f"   - {categoria:<15}: R$ {valor:,.2f}")
         elif opcao == '4':
             print("\n👋 Saindo... Até logo!")
             break

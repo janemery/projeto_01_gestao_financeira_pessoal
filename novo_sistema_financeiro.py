@@ -69,17 +69,27 @@ def total_por_categoria(df):
 def total_categorias_por_periodo(df, data_inicio, data_fim):
 
     def parse_data(data_str):
-        """Tenta converter datas nos formatos dd/mm/aaaa e dd/mm/aa."""
+    # Tenta converter datas nos formatos dd/mm/aaaa e dd/mm/aa.
+    # Retorna um objeto datetime, ou None se a data for inválida.
+    
         for fmt in ("%d/%m/%Y", "%d/%m/%y"):
             try:
                 return pd.to_datetime(data_str, format=fmt)
-            except ValueError:
+            except (ValueError, TypeError):
                 continue
-        raise ValueError(f"Formato de data inválido: {data_str}")
+
+        # Se chegou aqui, nenhuma conversão funcionou
+        print(f"⚠️  Erro: a data '{data_str}' é inválida.")
+        print("   → Use o formato DD/MM/AAAA (ex: 30/11/2025) e verifique se a data existe.")
+        return None
 
     # 🗓️ Converter datas de entrada
     inicio = parse_data(data_inicio)
     fim = parse_data(data_fim)
+
+    if not inicio or not fim:
+        print("❌ Datas inválidas — operação cancelada.")
+        return None  # evita comparar com None
 
     # 🧹 Converter a coluna 'data_transacao' se ainda não estiver no formato datetime
     df['data_transacao'] = pd.to_datetime(df['data_transacao'], format="%d/%m/%Y", errors='coerce')
