@@ -1,89 +1,101 @@
-from novo_sistema_financeiro import calcular_despesas, calcular_receitas, calcular_saldo, validar_csv
-from novo_sistema_financeiro import (
-    total_por_categoria,
-    total_categorias_por_periodo
-)
-from novo_sistema_financeiro import (
-    exibir_extrato
+import logging
+
+from financeiro.csv import validar_csv
+from financeiro.extrato import (
+    calcular_saldo,
+    exibir_total_categorias_periodo,
+    exibir_extrato,
+    resumo_financeiro,
 )
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+
+logger = logging.getLogger(__name__)
+
+
 def menu():
-    """Mostra o menu principal e retorna a escolha do usuário."""
+    """
+    Exibe o menu principal do sistema e solicita uma opção do usuário.
+
+    Returns:
+        str: O número da opção escolhida, entre "1", "2", "3" ou "4".
+
+    Notas:
+        A função só retorna quando o usuário informa uma opção válida.
+    """
     print("\n===============================")
-    print("💰 GERENCIADOR FINANCEIRO PESSOAL")
+    print("GERENCIADOR FINANCEIRO PESSOAL")
     print("===============================")
-       
-    print("1️⃣  Exibir extrato completo")
-    print("2️⃣  Mostrar resumo financeiro")
-    print("3️⃣  Mostrar total de categorias por período")
-    print("4️⃣  Sair")
+
+    print("1 - Exibir extrato completo")
+    print("2 - Mostrar resumo financeiro")
+    print("3 - Mostrar total de categorias por período")
+    print("4 - Sair")
     print("===============================")
 
     while True:
-        opcao = input("👉 Escolha uma opção (1-4): ").strip()
-        if opcao in ['1', '2', '3', '4']:
+        opcao = input("Escolha uma opção (1-4): ").strip()
+        if opcao in ["1", "2", "3", "4"]:
             return opcao
-        else:
-            print("❌ Opção inválida! Tente novamente.")
+        print("Opção inválida! Tente novamente.")
+
 
 def main():
-    """Função principal do sistema financeiro."""
+    """
+    Função principal do sistema financeiro.
+
+    Responsável por:
+      - Validar o arquivo CSV de dados financeiros;
+      - Carregar o DataFrame principal;
+      - Exibir o menu interativo;
+      - Encaminhar o usuário para as funções adequadas;
+      - Controlar o fluxo principal da aplicação.
+
+    Fluxo:
+        1. Valida o arquivo CSV.
+        2. Calcula o saldo inicial.
+        3. Entra no menu principal e executa ações conforme a opção escolhida.
+
+    Erros:
+        Caso o arquivo CSV seja inválido ou não possa ser lido,
+        a execução é encerrada de forma segura.
+
+    Returns:
+        None
+    """
     arquivo = "dados_financeiros.csv"
 
     try:
         df = validar_csv(arquivo)
-    except Exception as e:
-        print(e)
+    except Exception as exc:
+        logger.error("Erro ao validar CSV: %s", exc)
         return
-    
-    # Exibe um resumo inicial
-    # print("\n✅ Arquivo carregado com sucesso!")
-    # print(df.head(), "\n")
+
+    if df is None:
+        logger.error("Arquivo inválido. Encerrando execução.")
+        return
 
     saldo = calcular_saldo(df)
-    # if saldo is not None:
-        # print(f"💰 Saldo atual: R$ {saldo:,.2f}")
+    if saldo is not None:
+        logger.info("Saldo atual carregado com sucesso.")
 
-    # ======================================================
-    # MENU PRINCIPAL
-    # ======================================================
     while True:
         opcao = menu()
 
-        if opcao == '1':
-            # Exibir extrato
-            print("\n🏷️  Você escolheu exibir Extrato:")
+        if opcao == "1":
             exibir_extrato(df)
 
-        elif opcao == '2':
-            # Mostrar total por categoria
-            totais_categoria = total_por_categoria(df)
-            print("\n🏷️  Você escolheu Resumo financeiro:")
-            total_receitas = calcular_receitas(df)
-            print(f"\n🏷️ Total de receitas: {total_receitas:,.2f}")
-            print("\n🏷️ Total por categoria:")
-            for cat, val in totais_categoria.items():
-                print(f"   - {cat:<15}: R$ {val:,.2f}")
-            total_despesas = calcular_despesas(df)
-            print("-----------------------------")
-            print(f"   Total de despesas: R$ {total_despesas:,.2f}")
+        elif opcao == "2":
+            resumo_financeiro(df)
 
-        elif opcao == '3':
-            # Totais por período
-            data_inicio = input("📅 Informe a data inicial (dd/mm/aaaa): ")
-            data_fim = input("📅 Informe a data final (dd/mm/aaaa): ")
+        elif opcao == "3":
+            exibir_total_categorias_periodo(df)
 
-            totais_periodo = total_categorias_por_periodo(df, data_inicio, data_fim)
-
-            if totais_periodo is None or not totais_periodo:
-                print("❌ Não foi possível calcular os totais — verifique as datas ou se há dados no período.")
-            else:
-                print("\n🏷️  Você escolheu Totais por Categoria no Período:")
-                print(f"📅 Período: {data_inicio} - {data_fim}\n")
-                for categoria, valor in totais_periodo.items():
-                    print(f"   - {categoria:<15}: R$ {valor:,.2f}")
-        elif opcao == '4':
-            print("\n👋 Saindo... Até logo!")
+        elif opcao == "4":
+            print("\nSaindo... Até logo.")
             break
 
 
