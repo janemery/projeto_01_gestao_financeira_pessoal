@@ -122,3 +122,76 @@ Saldo Atual: R$ 4550,00
 Extrato:
    - 15/01/2024: Salário (Receita) R$ 5000,00
    - 20/01/2024: Supermercado (Despesa) R$ 450,00
+
+## Setup da aplicação
+
+1. Gerar o arquivo de dados (dataset). Execute:
+```
+python gerar_arquivo.py
+cat dados_financeiros_2025.csv
+```
+
+## Menu principal
+
+```
+===============================
+GERENCIADOR FINANCEIRO PESSOAL
+===============================
+
+1 - Exibir extrato completo
+2 - Mostrar resumo financeiro
+3 - Mostrar total de categorias por período
+4 - Sair
+===============================
+```
+
+📄 1 — Extrato Completo
+
+Exibe todas as transações, ordenadas por data, com:
+
+- Data
+- Tipo (Receita/Despesa)
+- Descrição
+- Categoria
+- Valor
+
+📊 2 — Resumo Financeiro
+
+Apresenta:
+
+- Total de receitas
+- Total de despesas
+- Totais por categoria
+
+📅 3 — Total por Categoria em um Período
+
+O usuário informa:
+
+- Data inicial (dd/mm/aaaa)
+- Data final (dd/mm/aaaa)
+
+E o sistema mostra os totais por categoria dentro do intervalo.
+
+❌ 4 — Sair
+
+Finaliza a aplicação.
+
+✔ 5. Logs
+
+A aplicação utiliza logging para registrar:
+
+- erros de leitura do CSV
+- validação de dados
+- fluxo de uso da aplicação
+
+Os logs aparecem diretamente no terminal.
+
+✔ 6. Resolução de Problemas
+**Erro: arquivo não encontrado**
+Verifique se o arquivo dados_financeiros.csv está no mesmo diretório do main.py.
+
+**Erro de datas**
+Use o formato correto: dd/mm/aaaa.
+
+**Colunas faltando**
+Certifique-se de que o CSV contém todas as colunas exigidas, exatamente com esses nomes.
